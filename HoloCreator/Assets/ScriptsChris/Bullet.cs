@@ -1,16 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using MRTK.Tutorials.MultiUserCapabilities;
+using Photon.Pun;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private bool isUser = default;
+    
     private void OnCollisionEnter(Collision other)
     {
-        if (other.collider.CompareTag("Ball"))
+        if (other.collider.CompareTag("Ball") && photonView.IsMine)
         {
-            Debug.Log("Bullet hit ball");
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }
