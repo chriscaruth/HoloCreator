@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshPro RoomNumber = null;
     [SerializeField] private MMFeedbacks StartGameFeedback;
     [SerializeField] private MMFeedbacks JoinedRoomFeedback;
+    [SerializeField] private MMFeedbacks ScaleObjectFeedback;
+    [SerializeField] private GameObject ScaleField;
     public string Username = null;
 
 
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         StartGameFeedback.Initialization();
         JoinedRoomFeedback.Initialization();
+        ScaleObjectFeedback.Initialization();
     }
 
     // Update is called once per frame
@@ -98,6 +101,14 @@ public class GameManager : MonoBehaviour
     {
         RoomNumber.text = "Room Number: " + Room;
         JoinedRoomFeedback.PlayFeedbacks();
+    }
+
+    public void ScaleObjects()
+    {
+        if (ScaleField.transform.localScale.x < 0.1f)
+        {
+            ScaleObjectFeedback.PlayFeedbacks();
+        }
 
     }
 
