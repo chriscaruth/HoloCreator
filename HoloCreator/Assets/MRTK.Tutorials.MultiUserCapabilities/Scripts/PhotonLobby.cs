@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using MoreMountains.Feedbacks;
+using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -7,9 +8,8 @@ namespace MRTK.Tutorials.MultiUserCapabilities
     public class PhotonLobby : MonoBehaviourPunCallbacks
     {
         public static PhotonLobby Lobby;
-
         private int roomNumber = 1;
-        private int userIdCount;
+        public int userIdCount = 1; //changed
 
         private void Awake()
         {
@@ -27,19 +27,18 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             }
 
             DontDestroyOnLoad(gameObject);
-
             GenericNetworkManager.OnReadyToStartNetwork += StartNetwork;
         }
 
         public override void OnConnectedToMaster()
         {
-            var randomUserId = Random.Range(0, 999999);
+            //var randomUserId = Random.Range(0, 999999);
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.AuthValues = new AuthenticationValues();
-            PhotonNetwork.AuthValues.UserId = randomUserId.ToString();
-            userIdCount++;
-            PhotonNetwork.NickName = PhotonNetwork.AuthValues.UserId;
+            PhotonNetwork.AuthValues.UserId = userIdCount.ToString();
+            PhotonNetwork.NickName = userIdCount + "_" + GameManager.Instance.Username;
             PhotonNetwork.JoinRandomRoom();
+            userIdCount++; // changed
         }
 
         public override void OnJoinedRoom()
@@ -50,6 +49,11 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             Debug.Log("Current room name: " + PhotonNetwork.CurrentRoom.Name);
             Debug.Log("Other players in room: " + PhotonNetwork.CountOfPlayersInRooms);
             Debug.Log("Total players in room: " + (PhotonNetwork.CountOfPlayersInRooms + 1));
+
+            if (PhotonNetwork.CurrentRoom != null)
+            {
+                GameManager.Instance.JoinedRoom(PhotonNetwork.CurrentRoom.Name);
+            }
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)

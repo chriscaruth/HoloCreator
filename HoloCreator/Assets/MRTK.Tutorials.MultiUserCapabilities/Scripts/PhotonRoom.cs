@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 
 namespace MRTK.Tutorials.MultiUserCapabilities
@@ -75,7 +76,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             photonPlayers = PhotonNetwork.PlayerList;
             playersInRoom = photonPlayers.Length;
             myNumberInRoom = playersInRoom;
-            PhotonNetwork.NickName = myNumberInRoom.ToString();
+           // PhotonNetwork.NickName = myNumberInRoom.ToString(); changed
 
             StartGame();
         }
@@ -92,6 +93,9 @@ namespace MRTK.Tutorials.MultiUserCapabilities
         private void CreatPlayer()
         {
             var player = PhotonNetwork.Instantiate(photonUserPrefab.name, Vector3.zero, Quaternion.identity);
+            TextMeshPro userName = player.GetComponentInChildren<TextMeshPro>(); // changed
+            userName.text = PhotonNetwork.NickName;
+
         }
 
         private void CreateInteractableObjects()

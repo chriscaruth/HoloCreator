@@ -32,7 +32,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
 
         private void Start()
         {
-            ConnectToNetwork();
+            //ConnectToNetwork();
         }
 
         // For future non PUN solutions
@@ -41,7 +41,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             throw new NotImplementedException();
         }
 
-        private void ConnectToNetwork()
+        public void ConnectToNetwork()
         {
             OnReadyToStartNetwork?.Invoke();
         }
