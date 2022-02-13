@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private MMFeedbacks ScaleObjectFeedback;
     [SerializeField] private GameObject ScaleField;
     public string Username = null;
+    public TouchScreenKeyboard HoloKeyboard;
 
     void Start()
     {
@@ -25,13 +26,28 @@ public class GameManager : Singleton<GameManager>
         ScaleObjectFeedback.Initialization();
     }
 
+    private void Update()
+    {
+        if (HoloKeyboard != null)
+        {
+            UpdateText(HoloKeyboard.text);
+        }
+    }
+
     public void ShowKeyBoard()
     {
-        keyboard.PresentKeyboard();
+        if (Application.isEditor)
+        {
+            keyboard.PresentKeyboard();
 
-        keyboard.OnClosed += DisableKeyboard;
-        keyboard.OnTextSubmitted += DisableKeyboard;
-        keyboard.OnTextUpdated += UpdateText;
+            keyboard.OnClosed += DisableKeyboard;
+            keyboard.OnTextSubmitted += DisableKeyboard;
+            keyboard.OnTextUpdated += UpdateText;
+        }
+        else
+        {
+            HoloKeyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false);
+        }
     }
 
     private void UpdateText(string text)
