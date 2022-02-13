@@ -5,16 +5,13 @@ using MRTK.Tutorials.MultiUserCapabilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-
-    public static GameManager Instance;
-
-    // Start is called before the first frame update
     [SerializeField] private NonNativeKeyboard keyboard = null;
     [SerializeField] private TextMeshPro textName = null;
     [SerializeField] private TextMeshPro textError = null;
@@ -25,36 +22,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ScaleField;
     public string Username = null;
 
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            if (Instance != this)
-            {
-                Destroy(Instance.gameObject);
-                Instance = this;
-            }
-        }
-
-        DontDestroyOnLoad(gameObject);
-    }
-
     void Start()
     {
         StartGameFeedback.Initialization();
         JoinedRoomFeedback.Initialization();
         ScaleObjectFeedback.Initialization();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ShowKeyBoard()
@@ -83,18 +55,18 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-       if (Username.Length > 0)
+        if (Username.Length > 0)
         {
             Debug.Log("Start Game");
+            
             StartGameFeedback.PlayFeedbacks();
+            
             GenericNetworkManager.Instance.ConnectToNetwork();
-
         }
         else
         {
             textError.text = "Please enter in a username";
         }
-
     }
 
     public void JoinedRoom(string Room)
@@ -109,8 +81,5 @@ public class GameManager : MonoBehaviour
         {
             ScaleObjectFeedback.PlayFeedbacks();
         }
-
     }
-
-
 }

@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private bool isUser = default;
+    private float _lifetime = 1; 
+ 
+    private void Update() 
+    { 
+        _lifetime -= Time.deltaTime; 
+ 
+        if (_lifetime <= 0 && photonView.IsMine) 
+        {
+            PhotonNetwork.Destroy(gameObject); 
+        } 
+    } 
     
     private void OnCollisionEnter(Collision other)
     {

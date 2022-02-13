@@ -53,9 +53,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             if (PhotonNetwork.CurrentRoom != null)
             {
                 GameManager.Instance.JoinedRoom(PhotonNetwork.CurrentRoom.Name);
-                GameManager.Instance.ScaleObjects();
-
-
+                //GameManager.Instance.ScaleObjects();
             }
         }
 
