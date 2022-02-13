@@ -11,6 +11,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
     {
         [SerializeField] private GameObject photonUserPrefab = default;
         [SerializeField] private GameObject _playingField;
+        [SerializeField] private GameObject _ball;
         [SerializeField] private GameObject _waitingScreen;
 
         // private PhotonView pv;
@@ -59,6 +60,11 @@ namespace MRTK.Tutorials.MultiUserCapabilities
                 {
                     pool.ResourceCache.Add(_playingField.name, _playingField);
                 }
+
+                if (_ball != null)
+                {
+                    pool.ResourceCache.Add(_ball.name, _ball);
+                }
             }
         }
 
@@ -95,10 +101,13 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             
             _waitingScreen.SetActive(false);
 
-            var spawnPosition = new Vector3(0, -.4f, 1);
-            PhotonNetwork.Instantiate(_playingField.name, spawnPosition, Quaternion.identity);
+            var spawnFieldPosition = new Vector3(0, -.4f, 1.5f);
+            PhotonNetwork.Instantiate(_playingField.name, spawnFieldPosition, Quaternion.identity);
+
+            var spawnBallPosition = new Vector3(0, 3, 1.5f);
+            PhotonNetwork.Instantiate(_ball.name, spawnBallPosition, Quaternion.identity);
             
-            GameManager.Instance.ScaleObjects();
+            //GameManager.Instance.ScaleObjects();
         }
 
         private void CreatPlayer()
