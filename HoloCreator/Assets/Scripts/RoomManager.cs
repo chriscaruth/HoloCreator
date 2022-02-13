@@ -112,9 +112,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
 
         private void CreatPlayer()
         {
-            var player = PhotonNetwork.Instantiate(photonUserPrefab.name, Vector3.zero, Quaternion.identity);
-            TextMeshPro userName = player.GetComponentInChildren<TextMeshPro>();
-            userName.text = PhotonNetwork.NickName;
+            PhotonNetwork.Instantiate(photonUserPrefab.name, Vector3.zero, Quaternion.identity);
         }
     }
 }

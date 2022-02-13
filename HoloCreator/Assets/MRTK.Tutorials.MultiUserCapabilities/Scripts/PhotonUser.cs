@@ -1,21 +1,27 @@
 ﻿using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 namespace MRTK.Tutorials.MultiUserCapabilities
 {
     public class PhotonUser : MonoBehaviour
     {
-        private PhotonView pv;
-        private string username;
+        private PhotonView _pv;
+        private TextMeshPro _text;
 
         private void Start()
         {
-            pv = GetComponent<PhotonView>();
+            _pv = GetComponent<PhotonView>();
+            _text = GetComponentInChildren<TextMeshPro>();
+            
+            if (_text != null)
+            {
+                _text.text = _pv.Owner.NickName;
+            }
 
-            if (!pv.IsMine) return;
-
-            username = "User" + PhotonNetwork.NickName;
-            pv.RPC("PunRPC_SetNickName", RpcTarget.AllBuffered, username);
+            if (!_pv.IsMine) return;
+            
+            _pv.RPC("PunRPC_SetNickName", RpcTarget.AllBuffered, _text.text);
         }
 
         [PunRPC]
@@ -31,13 +37,13 @@ namespace MRTK.Tutorials.MultiUserCapabilities
 
             Debug.Log("\nPhotonUser.PunRPC_ShareAzureAnchorId()");
             Debug.Log("GenericNetworkManager.instance.azureAnchorId: " + GenericNetworkManager.Instance.azureAnchorId);
-            Debug.Log("Azure Anchor ID shared by user: " + pv.Controller.UserId);
+            Debug.Log("Azure Anchor ID shared by user: " + _pv.Controller.UserId);
         }
 
         public void ShareAzureAnchorId()
         {
-            if (pv != null)
-                pv.RPC("PunRPC_ShareAzureAnchorId", RpcTarget.AllBuffered,
+            if (_pv != null)
+                _pv.RPC("PunRPC_ShareAzureAnchorId", RpcTarget.AllBuffered,
                     GenericNetworkManager.Instance.azureAnchorId);
             else
                 Debug.LogError("PV is null");

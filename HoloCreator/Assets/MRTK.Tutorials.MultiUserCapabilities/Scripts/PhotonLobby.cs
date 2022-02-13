@@ -36,7 +36,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.AuthValues = new AuthenticationValues();
             PhotonNetwork.AuthValues.UserId = userIdCount.ToString();
-            PhotonNetwork.NickName = userIdCount + "_" + GameManager.Instance.Username;
+            PhotonNetwork.NickName = GameManager.Instance.Username;
             PhotonNetwork.JoinRandomRoom();
             userIdCount++; // changed
         }

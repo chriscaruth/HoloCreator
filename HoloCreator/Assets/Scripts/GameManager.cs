@@ -1,14 +1,10 @@
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
-using Microsoft.MixedReality.Toolkit.UI;
 using MoreMountains.Feedbacks;
 using MRTK.Tutorials.MultiUserCapabilities;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Core;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class GameManager : Singleton<GameManager>
 {
