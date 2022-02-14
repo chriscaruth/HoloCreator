@@ -104,7 +104,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             var spawnFieldPosition = new Vector3(0, -.4f, 1.5f);
             PhotonNetwork.Instantiate(_playingField.name, spawnFieldPosition, Quaternion.identity);
 
-            var spawnBallPosition = new Vector3(0, 3, 1.5f);
+            var spawnBallPosition = new Vector3(0, 1, 1.5f);
             PhotonNetwork.Instantiate(_ball.name, spawnBallPosition, Quaternion.identity);
             
             //GameManager.Instance.ScaleObjects();
@@ -112,7 +112,15 @@ namespace MRTK.Tutorials.MultiUserCapabilities
 
         private void CreatPlayer()
         {
-            PhotonNetwork.Instantiate(photonUserPrefab.name, Vector3.zero, Quaternion.identity);
+            var position = playersInRoom == 1 
+                ? Vector3.zero 
+                : new Vector3(0, 0, 3);
+
+            var rotation = playersInRoom == 1
+                ? Quaternion.identity
+                : Quaternion.Euler(0, 180, 0);
+            
+            PhotonNetwork.Instantiate(photonUserPrefab.name, position, rotation);
         }
     }
 }
