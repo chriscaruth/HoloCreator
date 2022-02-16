@@ -100,8 +100,8 @@ public class GameManager : Singleton<GameManager>
         ScoreA += addA;
         ScoreB += addB;
 
-        PlayerAScore.text = "Player 1 Score: " + ScoreA;
-        PlayerBScore.text = "Player 2 Score: " + ScoreB;
+        PlayerAScore.text = "Player A Score: " + ScoreA;
+        PlayerBScore.text = "Player B Score: " + ScoreB;
 
         if (ScoreA > 4)
         {
