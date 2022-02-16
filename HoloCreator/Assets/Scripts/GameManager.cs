@@ -3,6 +3,7 @@ using MoreMountains.Feedbacks;
 using MRTK.Tutorials.MultiUserCapabilities;
 using System;
 using Core;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
@@ -97,6 +98,13 @@ public class GameManager : Singleton<GameManager>
 
     public void UpdateScore(int addA, int addB)
     {
+        var pv = PhotonView.Get(this);
+        pv.RPC("UpdateScorePun", RpcTarget.All, addA, addB);
+    }
+
+    [PunRPC]
+    private void UpdateScorePun(int addA, int addB)
+    {
         ScoreA += addA;
         ScoreB += addB;
 
@@ -115,10 +123,16 @@ public class GameManager : Singleton<GameManager>
         {
             Message.text = "Score 5 goals to win!";
         }
-
     }
 
     public void ResetGame()
+    {
+        var pv = PhotonView.Get(this);
+        pv.RPC("ResetGamePun", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void ResetGamePun()
     {
         ScoreA = 0;
         ScoreB = 0;
@@ -129,11 +143,16 @@ public class GameManager : Singleton<GameManager>
 
         RoomManager.Instance.ResetBall();
     }
-
+    
     public void ToggleHandShooter()
     {
+        var pv = PhotonView.Get(this);
+        pv.RPC("ToggleHandShooterPun", RpcTarget.All);
+    }
 
+    [PunRPC]
+    private void ToggleHandShooterPun()
+    {
         ToggleShooting.SetActive(!active);
-
     }
 }
