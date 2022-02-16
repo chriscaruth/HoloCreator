@@ -128,6 +128,12 @@ namespace MRTK.Tutorials.MultiUserCapabilities
 
         public void ResetBall()
         {
+            photonView.RPC("ResetBallRPC", RpcTarget.All);
+        }
+
+        [PunRPC]
+        public void ResetBallRPC()
+        {
             DestroyBall();
             SpawnBall();
         }
