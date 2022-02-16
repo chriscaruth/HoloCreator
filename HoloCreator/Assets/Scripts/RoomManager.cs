@@ -115,7 +115,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
 
         public void SpawnBall()
         {
-            _ballSpawn = PhotonNetwork.Instantiate(_ball.name, new Vector3(_fieldSpawn.transform.position.x, _fieldSpawn.transform.position.y + 3f, _fieldSpawn.transform.position.z), Quaternion.identity);
+            _ballSpawn = PhotonNetwork.Instantiate(_ball.name, new Vector3(_fieldSpawn.transform.position.x, _fieldSpawn.transform.position.y + 1f, _fieldSpawn.transform.position.z), Quaternion.identity);
         }
 
         public void DestroyBall()

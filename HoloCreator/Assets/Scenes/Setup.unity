@@ -2141,6 +2141,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGameInfo
       objectReference: {fileID: 0}
+    - target: {fileID: 2865512872734749358, guid: b18155567fa5bce4d945387404b9d63c, type: 3}
+      propertyPath: m_Size.x
+      value: 0.95199364
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865512872734749358, guid: b18155567fa5bce4d945387404b9d63c, type: 3}
+      propertyPath: m_Size.y
+      value: 0.8797916
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865512872734749358, guid: b18155567fa5bce4d945387404b9d63c, type: 3}
+      propertyPath: m_Size.z
+      value: 0.055063367
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865512872734749358, guid: b18155567fa5bce4d945387404b9d63c, type: 3}
+      propertyPath: m_Center.x
+      value: -0.074364334
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865512872734749358, guid: b18155567fa5bce4d945387404b9d63c, type: 3}
+      propertyPath: m_Center.y
+      value: -0.06010419
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865512872734749358, guid: b18155567fa5bce4d945387404b9d63c, type: 3}
+      propertyPath: m_Center.z
+      value: 0.06541145
+      objectReference: {fileID: 0}
     - target: {fileID: 4046958890587743190, guid: b18155567fa5bce4d945387404b9d63c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
