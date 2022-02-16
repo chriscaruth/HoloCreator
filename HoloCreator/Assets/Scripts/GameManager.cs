@@ -12,18 +12,21 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private TextMeshPro textName = null;
     [SerializeField] private TextMeshPro textError = null;
     [SerializeField] private TextMeshPro RoomNumber = null;
+    [SerializeField] private TextMeshPro PlayerAScore = null;
+    [SerializeField] private TextMeshPro PlayerBScore = null;
+    [SerializeField] private TextMeshPro Message = null;
     [SerializeField] private MMFeedbacks StartGameFeedback;
-    [SerializeField] private MMFeedbacks JoinedRoomFeedback;
-    [SerializeField] private MMFeedbacks ScaleObjectFeedback;
-    [SerializeField] private GameObject ScaleField;
+    [SerializeField] private GameObject ToggleShooting;
+    [SerializeField] private GameObject[] buttons;
     public string Username = null;
+    private bool active = false;
     public TouchScreenKeyboard HoloKeyboard;
+    private int ScoreA = 0;
+    private int ScoreB = 0;
 
     void Start()
     {
         StartGameFeedback.Initialization();
-        JoinedRoomFeedback.Initialization();
-        ScaleObjectFeedback.Initialization();
     }
 
     private void Update()
@@ -32,6 +35,7 @@ public class GameManager : Singleton<GameManager>
         {
             UpdateText(HoloKeyboard.text);
         }
+
     }
 
     public void ShowKeyBoard()
@@ -72,7 +76,6 @@ public class GameManager : Singleton<GameManager>
             Debug.Log("Start Game");
             
             StartGameFeedback.PlayFeedbacks();
-            
             GenericNetworkManager.Instance.ConnectToNetwork();
         }
         else
@@ -84,14 +87,53 @@ public class GameManager : Singleton<GameManager>
     public void JoinedRoom(string Room)
     {
         RoomNumber.text = "Room Number: " + Room;
-        JoinedRoomFeedback.PlayFeedbacks();
+        Message.text = "Score 5 goals to win!";
+        
+        foreach(GameObject button in buttons)
+        {
+            button.SetActive(true);
+        }
     }
 
-    public void ScaleObjects()
+    public void UpdateScore(int addA, int addB)
     {
-        if (ScaleField.transform.localScale.x < 0.1f)
+        ScoreA += addA;
+        ScoreB += addB;
+
+        PlayerAScore.text = "Player 1 Score: " + ScoreA;
+        PlayerBScore.text = "Player 2 Score: " + ScoreB;
+
+        if (ScoreA > 4)
         {
-            ScaleObjectFeedback.PlayFeedbacks();
+            Message.text = "Congratulations, Player A Wins!";
         }
+        else if (ScoreB > 4)
+        {
+            Message.text = "Congratulations, Player B Wins!";
+        }
+        else
+        {
+            Message.text = "Score 5 goals to win!";
+        }
+
+    }
+
+    public void ResetGame()
+    {
+        ScoreA = 0;
+        ScoreB = 0;
+
+        PlayerAScore.text = "Player A Score: " + ScoreA;
+        PlayerBScore.text = "Player B Score: " + ScoreB;
+        Message.text = "First player to score 5 goals wins!";
+
+        RoomManager.Instance.ResetBall();
+    }
+
+    public void ToggleHandShooter()
+    {
+
+        ToggleShooting.SetActive(!active);
+
     }
 }

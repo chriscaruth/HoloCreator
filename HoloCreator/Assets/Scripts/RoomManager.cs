@@ -11,14 +11,17 @@ namespace MRTK.Tutorials.MultiUserCapabilities
     {
         [SerializeField] private GameObject photonUserPrefab = default;
         [SerializeField] private GameObject _playingField;
-        [SerializeField] private GameObject _ball;
+        [SerializeField] private GameObject _ball;   
         [SerializeField] private GameObject _waitingScreen;
+
 
         // private PhotonView pv;
         private Player[] photonPlayers;
         private int playersInRoom;
         private int myNumberInRoom;
         private bool _isWaitingForPlayer;
+        private GameObject _fieldSpawn;
+        private GameObject _ballSpawn;
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -76,12 +79,14 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             playersInRoom = photonPlayers.Length;
             myNumberInRoom = playersInRoom;
 
+ 
             CreatPlayer();
 
             if (myNumberInRoom == 1)
             {
                 _isWaitingForPlayer = true;
                 _waitingScreen.SetActive(true);
+
             }
         }
 
@@ -102,12 +107,29 @@ namespace MRTK.Tutorials.MultiUserCapabilities
             _waitingScreen.SetActive(false);
 
             var spawnFieldPosition = new Vector3(0, -.4f, 1.5f);
-            PhotonNetwork.Instantiate(_playingField.name, spawnFieldPosition, Quaternion.identity);
+            _fieldSpawn = PhotonNetwork.Instantiate(_playingField.name, spawnFieldPosition, Quaternion.identity);
 
-            var spawnBallPosition = new Vector3(0, 1, 1.5f);
-            PhotonNetwork.Instantiate(_ball.name, spawnBallPosition, Quaternion.identity);
-            
-            //GameManager.Instance.ScaleObjects();
+            SpawnBall();
+
+        }
+
+        public void SpawnBall()
+        {
+            _ballSpawn = PhotonNetwork.Instantiate(_ball.name, new Vector3(_fieldSpawn.transform.position.x, _fieldSpawn.transform.position.y + 3f, _fieldSpawn.transform.position.z), Quaternion.identity);
+        }
+
+        public void DestroyBall()
+        {
+            if (_ballSpawn != null)
+            {
+                PhotonNetwork.Destroy(_ballSpawn);
+            }
+        }
+
+        public void ResetBall()
+        {
+            DestroyBall();
+            SpawnBall();
         }
 
         private void CreatPlayer()

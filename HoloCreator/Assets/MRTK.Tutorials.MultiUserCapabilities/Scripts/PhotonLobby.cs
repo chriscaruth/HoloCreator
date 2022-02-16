@@ -90,6 +90,7 @@ namespace MRTK.Tutorials.MultiUserCapabilities
         {
             var roomOptions = new RoomOptions {IsVisible = true, IsOpen = true, MaxPlayers = 10};
             PhotonNetwork.CreateRoom("Room" + Random.Range(1, 3000), roomOptions);
+           // PhotonNetwork.CreateRoom("Room" + 1, roomOptions);
         }
     }
 }
